@@ -63,4 +63,4 @@ function analyzeText() {
         li.innerText = flag;
         redFlagsList.appendChild(li);
     });
-}
+}+

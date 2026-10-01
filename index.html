@@ -31,54 +31,81 @@
 
     <script>
         document.getElementById('checkBtn').addEventListener('click', function() {
-            const input = document.getElementById('userInput').value.trim();
-            const resultBox = document.getElementById('resultBox');
-            const riskLevel = document.getElementById('riskLevel');
-            const riskExplanation = document.getElementById('riskExplanation');
-            const redFlagsList = document.getElementById('redFlagsList');
+    const input = document.getElementById('userInput').value.trim();
+    const resultBox = document.getElementById('resultBox');
+    const riskLevel = document.getElementById('riskLevel');
+    const riskExplanation = document.getElementById('riskExplanation');
+    const redFlagsList = document.getElementById('redFlagsList');
 
-            if (!input) {
-                alert("Please paste text first!");
-                return;
-            }
+    if (!input) {
+        alert("Please paste text first!");
+        return;
+    }
 
-            redFlagsList.innerHTML = "";
-            let score = 0;
-            let flags = [];
+    redFlagsList.innerHTML = "";
+    let score = 0;
+    let flags = [];
 
-            if (/3200|fee|registration|शुल्क|पैसा|payment/i.test(input)) {
-                score += 4;
-                flags.push("Upfront Registration Fee demanded (3200/-) — standard scam indicator!");
-            }
-            if (/100%|genuine|गारन्टी|ग्यारेन्टी/i.test(input)) {
-                score += 3;
-                flags.push("Claims '100% Genuine' — common in fake typing job ads.");
-            }
-            if (/typing|data entry|screen|घर\/अफिस|घरमै/i.test(input)) {
-                score += 2;
-                flags.push("Offers easy mobile/laptop typing work.");
-            }
+    // Category 1: Upfront Payments & Job Fees
+    if (/fee|registration|3200|payment|advance|charge|शुल्क|पैसा|कमिसन/i.test(input)) {
+        score += 3;
+        flags.push("Demands upfront payment or registration fee.");
+    }
 
-            resultBox.style.display = "block";
-            
-            if (score >= 3) {
-                resultBox.className = "high-risk";
-                riskLevel.innerText = "🚨 HIGH RISK SCAM";
-                riskExplanation.innerText = "This message matches known fake job scams:";
-            } else {
-                resultBox.className = "low-risk";
-                riskLevel.innerText = "⚠️ CAUTION REQUIRED";
-                riskExplanation.innerText = "Be cautious before sharing info or money:";
-            }
+    // Category 2: Lottery, Prize & Free Money Scams
+    if (/won|winner|lottery|prize|lakh|crore|congratulations|gift|पुरस्कार|चिठ्ठा|जीत/i.test(input)) {
+        score += 3;
+        flags.push("Claims you won a lottery, prize, or cash gift unexpectedly.");
+    }
 
-            if (flags.length === 0) flags.push("Do not pay upfront fees for online work.");
+    // Category 3: Banking, OTP, Account Blocking & Suspicious Links
+    if (/otp|pin|password|bank|account|blocked|verify|click here|link|bit\.ly|t\.me|khalti|esewa|पासवर्ड/i.test(input)) {
+        score += 3;
+        flags.push("Requests sensitive banking info, OTP, or includes suspicious links.");
+    }
 
-            flags.forEach(f => {
-                let li = document.createElement('li');
-                li.innerText = f;
-                redFlagsList.appendChild(li);
-            });
-        });
+    // Category 4: High-Yield Investment / Easy Income
+    if (/100%|genuine|guarantee|earn daily|double your money|crypto|invest|गारन्टी|ग्यारेन्टी|अन्लाईन कमाई/i.test(input)) {
+        score += 2;
+        flags.push("Promises guaranteed high income or 100% risk-free earnings.");
+    }
+
+    // Category 5: Work-From-Home / Data Entry / Typing Traps
+    if (/typing|data entry|screen|part time|work from home|घर\/अफिस|घरमै/i.test(input)) {
+        score += 2;
+        flags.push("Offers low-effort work-from-home or online typing jobs.");
+    }
+
+    // Category 6: Artificial Urgency & Threats
+    if (/urgent|immediately|within 24 hours|legal action|police|अहिले नै|तत्काल/i.test(input)) {
+        score += 2;
+        flags.push("Uses artificial urgency or legal threats to force immediate action.");
+    }
+
+    resultBox.style.display = "block";
+
+    // Scoring Threshold
+    if (score >= 3) {
+        resultBox.className = "high-risk";
+        riskLevel.innerText = "🚨 HIGH RISK SCAM DETECTED";
+        riskExplanation.innerText = "This message contains strong scam indicators:";
+    } else if (score > 0) {
+        resultBox.className = "low-risk";
+        riskLevel.innerText = "⚠️ MODERATE CAUTION";
+        riskExplanation.innerText = "Some suspicious patterns detected. Proceed carefully:";
+    } else {
+        resultBox.className = "low-risk";
+        riskLevel.innerText = "✅ SAFE / LOW RISK";
+        riskExplanation.innerText = "No common scam keywords detected in this text.";
+        flags.push("No registration fees, fake prizes, or suspicious requests found.");
+    }
+
+    flags.forEach(f => {
+        let li = document.createElement('li');
+        li.innerText = f;
+        redFlagsList.appendChild(li);
+    });
+});
     </script>
 </body>
 </html>
