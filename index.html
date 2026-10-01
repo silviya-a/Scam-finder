@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Am I Being Scammed?</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 40px 10px; }
+        .card { background: white; padding: 30px; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        textarea { width: 100%; height: 120px; padding: 10px; border: 2px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        button { background: #0056b3; color: white; border: none; padding: 12px; width: 100%; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 10px; }
+        #resultBox { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+        .high-risk { background: #ffe6e6; border: 2px solid #d9534f; color: #900; }
+        .low-risk { background: #fff3cd; border: 2px solid #ffebaa; color: #856404; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>🛡️ Am I Being Scammed?</h2>
+        <p>Paste suspicious text below:</p>
+        <textarea id="userInput" placeholder="Paste message here..."></textarea>
+        <button type="button" id="checkBtn">Check for Scams</button>
+
+        <div id="resultBox">
+            <h3 id="riskLevel"></h3>
+            <p id="riskExplanation"></p>
+            <ul id="redFlagsList"></ul>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('checkBtn').addEventListener('click', function() {
+            const input = document.getElementById('userInput').value.trim();
+            const resultBox = document.getElementById('resultBox');
+            const riskLevel = document.getElementById('riskLevel');
+            const riskExplanation = document.getElementById('riskExplanation');
+            const redFlagsList = document.getElementById('redFlagsList');
+
+            if (!input) {
+                alert("Please paste text first!");
+                return;
+            }
+
+            redFlagsList.innerHTML = "";
+            let score = 0;
+            let flags = [];
+
+            if (/3200|fee|registration|शुल्क|पैसा|payment/i.test(input)) {
+                score += 4;
+                flags.push("Upfront Registration Fee demanded (3200/-) — standard scam indicator!");
+            }
+            if (/100%|genuine|गारन्टी|ग्यारेन्टी/i.test(input)) {
+                score += 3;
+                flags.push("Claims '100% Genuine' — common in fake typing job ads.");
+            }
+            if (/typing|data entry|screen|घर\/अफिस|घरमै/i.test(input)) {
+                score += 2;
+                flags.push("Offers easy mobile/laptop typing work.");
+            }
+
+            resultBox.style.display = "block";
+            
+            if (score >= 3) {
+                resultBox.className = "high-risk";
+                riskLevel.innerText = "🚨 HIGH RISK SCAM";
+                riskExplanation.innerText = "This message matches known fake job scams:";
+            } else {
+                resultBox.className = "low-risk";
+                riskLevel.innerText = "⚠️ CAUTION REQUIRED";
+                riskExplanation.innerText = "Be cautious before sharing info or money:";
+            }
+
+            if (flags.length === 0) flags.push("Do not pay upfront fees for online work.");
+
+            flags.forEach(f => {
+                let li = document.createElement('li');
+                li.innerText = f;
+                redFlagsList.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 550px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #1a1a1a;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+textarea {
+    width: 100%;
+    height: 130px;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+}
+
+textarea:focus {
+    border-color: #0056b3;
+    outline: none;
+}
+
+button {
+    background-color: #0056b3;
+    color: #ffffff;
+    border: none;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: #003d80;
+}
+
+button:active {
+    transform: scale(0.99);
+}
+
+/* Results Display Styling */
+.result {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* High-Risk Scam Box (Red) */
+.high-risk {
+    background-color: #fff5f5;
+    border: 2px solid #ff4d4f;
+    color: #820014;
+}
+
+.high-risk h2 {
+    color: #cf1322;
+    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+/* Caution Box (Yellow) */
+.low-risk {
+    background-color: #fffbe6;
+    border: 2px solid #ffe58f;
+    color: #614700;
+}
+
+.low-risk h2 {
+    color: #d48806;
+    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.result p {
+    font-size: 14px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+ul#redFlagsList {
+    padding-left: 20px;
+    margin: 0;
+}
+
+ul#redFlagsList li {
+    font-size: 13px;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
